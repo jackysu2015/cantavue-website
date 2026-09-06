@@ -1,0 +1,7 @@
+.dart_tool/
+build/
+work/
+lib/l10n/generated/
+*.log
+.DS_Store
+dist/

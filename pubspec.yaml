@@ -1,0 +1,42 @@
+name: cantavue_website
+description: CantaVue official promotional website.
+publish_to: none
+version: 1.0.0+1
+environment:
+  sdk: ^3.11.3
+  flutter: '>=3.41.5'
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: 0.20.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: 6.0.0
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/brand.png
+    - assets/hero.png
+    - assets/fonts/OFL-NotoSansSC.txt
+    - assets/fonts/OFL-NotoSansTC.txt
+  fonts:
+    - family: CantaSansSC
+      fonts:
+        - asset: assets/fonts/NotoSansSC-400.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSansSC-600.ttf
+          weight: 600
+        - asset: assets/fonts/NotoSansSC-700.ttf
+          weight: 700
+    - family: CantaSansTC
+      fonts:
+        - asset: assets/fonts/NotoSansTC-400.ttf
+          weight: 400
+        - asset: assets/fonts/NotoSansTC-600.ttf
+          weight: 600
+        - asset: assets/fonts/NotoSansTC-700.ttf
+          weight: 700

@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://cantavue.supingjing.chatgpt.site/sitemap.xml

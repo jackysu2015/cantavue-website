@@ -1,0 +1,132 @@
+import 'dart:convert';
+import 'dart:io';
+
+// Search-readable HTML and Flutter use the same localized copy.
+void main(List<String> args) {
+  final origin = args.isEmpty
+      ? 'https://cantavue.supingjing.chatgpt.site'
+      : args.single;
+  final uri = Uri.parse(origin);
+  if (uri.scheme != 'https' ||
+      uri.host.isEmpty ||
+      uri.hasQuery ||
+      uri.hasFragment) {
+    throw ArgumentError('A trusted HTTPS site origin is required.');
+  }
+  const pages = {
+    'zh-Hans': ('zh_Hans', 'index.html'),
+    'zh-Hant': ('zh_Hant', 'zh-Hant.html'),
+    'en': ('en', 'en.html'),
+  };
+  for (final entry in pages.entries) {
+    final locale = entry.key;
+    final text =
+        (jsonDecode(
+                  File(
+                    'lib/l10n/site_${entry.value.$1}.arb',
+                  ).readAsStringSync(),
+                )
+                as Map<String, dynamic>)
+            .cast<String, String>();
+    String t(String key) =>
+        const HtmlEscape().convert(text[key]!).replaceAll('\n', '<br>');
+    final title =
+        "${text['brandCaption']} · ${text['heroTitle']!.replaceAll('\n', ' ')}";
+    final canonical =
+        '$origin/${entry.value.$2 == 'index.html' ? '' : entry.value.$2}';
+    final content = StringBuffer(
+      '<main id="document"><header><img src="assets/assets/brand.png" alt="" width="48" height="48"><strong>${t('brandCaption')}</strong><nav><a href="/">简体中文</a> · <a href="/zh-Hant.html">繁體中文</a> · <a href="/en.html">English</a></nav></header>',
+    );
+    content.write(
+      '<section><p>${t('eyebrow')}</p><h1>${t('heroTitle')}</h1><p>${t('heroBody')}</p><p>${t('heroNote')}</p><a href="#release">${t('releaseCta')}</a></section>',
+    );
+    content.write(
+      '<section><h2>${t('featureTitle')}</h2><p>${t('featureBody')}</p>',
+    );
+    for (final feature in ['read', 'ink', 'library', 'practice']) {
+      content.write(
+        '<article><h3>${t('${feature}Title')}</h3><p>${t('${feature}Body')}</p></article>',
+      );
+    }
+    content.write(
+      '<p>${t('featureNote')}</p></section><section><h2>${t('workflowTitle')}</h2><p>${t('workflowBody')}</p>',
+    );
+    for (var i = 1; i <= 3; i++) {
+      content.write(
+        '<article><h3>${t('step${i}Title')}</h3><p>${t('step${i}Body')}</p></article>',
+      );
+    }
+    content.write(
+      '</section><section><h2>${t('privacyTitle')}</h2><p>${t('privacyBody')}</p></section><section><h2>${t('faqTitle')}</h2>',
+    );
+    for (var i = 1; i <= 5; i++) {
+      content.write(
+        '<details><summary>${t('faq${i}q')}</summary><p>${t('faq${i}a')}</p></details>',
+      );
+    }
+    content.write(
+      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p></section><footer>${t('footerCopyright')}<p>${t('footerPrivacy')}</p></footer></main>',
+    );
+    final alternates = pages.entries
+        .map(
+          (p) =>
+              '<link rel="alternate" hreflang="${p.key}" href="$origin/${p.value.$2 == 'index.html' ? '' : p.value.$2}">',
+        )
+        .join('\n');
+    File('web/${entry.value.$2}').writeAsStringSync('''<!DOCTYPE html>
+<html lang="$locale">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#5552DB">
+  <meta name="description" content="${t('heroBody')}">
+  <meta property="og:title" content="${const HtmlEscape().convert(title)}">
+  <meta property="og:description" content="${t('heroBody')}">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="$canonical">
+  $alternates
+  <link rel="icon" type="image/png" href="assets/assets/brand.png">
+  <link rel="manifest" href="manifest.json">
+  <title>${const HtmlEscape().convert(title)}</title>
+  <style>
+    html,body{margin:0;background:#111127;color:#fff;font:17px/1.8 system-ui,-apple-system,sans-serif}*{box-sizing:border-box}
+    #document{max-width:1100px;margin:auto;padding:32px 24px}header{display:flex;align-items:center;gap:14px;flex-wrap:wrap}header img{border-radius:12px}nav{font-size:14px}
+    section{padding:54px 0;border-bottom:1px solid #38334e}h1{font-size:clamp(38px,6vw,68px);line-height:1.25;letter-spacing:-1.5px}h2{font-size:34px;line-height:1.35}p{max-width:780px;color:#d1cfe1}article{margin:32px 0}a{color:#cbc4ff}summary{cursor:pointer;padding:14px 0}footer{padding:32px 0;font-size:14px}
+  </style>
+</head>
+<body>
+$content
+<script>
+window.cantavueSetLocale = function(locale, title, description) {
+  document.documentElement.lang = locale;
+  document.title = title;
+  document.querySelector('meta[name="description"]').content = description;
+  document.querySelector('meta[property="og:title"]').content = title;
+  document.querySelector('meta[property="og:description"]').content = description;
+  const url = new URL(location.href);
+  url.pathname = locale === 'en' ? '/en.html' : locale === 'zh-Hant' ? '/zh-Hant.html' : '/';
+  url.searchParams.delete('lang');
+  history.replaceState(null, '', url);
+  document.querySelector('link[rel="canonical"]').href = ${jsonEncode(origin)} + url.pathname;
+};
+</script>
+<script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
+''');
+  }
+  final primary =
+      jsonDecode(File('lib/l10n/site_zh_Hans.arb').readAsStringSync())
+          as Map<String, dynamic>;
+  File('web/manifest.json').writeAsStringSync(
+    '${jsonEncode({'name': primary['brandCaption'], 'short_name': 'CantaVue', 'start_url': '.', 'display': 'browser', 'background_color': '#111127', 'theme_color': '#5552DB', 'description': primary['heroBody']})}\n',
+  );
+  File('web/robots.txt').writeAsStringSync(
+    'User-agent: *\nAllow: /\nSitemap: $origin/sitemap.xml\n',
+  );
+  File('web/sitemap.xml').writeAsStringSync(
+    '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages.values.map((p) => '<url><loc>$origin/${p.$2 == 'index.html' ? '' : p.$2}</loc></url>').join()}</urlset>\n',
+  );
+}

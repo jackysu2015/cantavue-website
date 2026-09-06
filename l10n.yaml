@@ -1,0 +1,6 @@
+arb-dir: lib/l10n
+template-arb-file: site_en.arb
+output-localization-file: site_localizations.dart
+output-class: SiteLocalizations
+output-dir: lib/l10n/generated
+nullable-getter: false
