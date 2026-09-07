@@ -72,8 +72,8 @@ List<String> buildPolicies(String origin) {
   <meta name="description" content="${t('${kind}Intro')}">
   <meta name="robots" content="index, follow">
   <title>$title · CantaVue</title>
-  <link rel="canonical" href="$origin/$path">
-  ${policyLanguages.keys.map((locale) => '<link rel="alternate" hreflang="$locale" href="$origin/${policyPath(kind, locale)}">').join('\n')}
+  <link rel="canonical" href="$origin/${path.replaceFirst('.html', '')}">
+  ${policyLanguages.keys.map((locale) => '<link rel="alternate" hreflang="$locale" href="$origin/${policyPath(kind, locale).replaceFirst('.html', '')}">').join('\n')}
   <link rel="icon" type="image/png" href="/assets/assets/brand.png">
   <link rel="stylesheet" href="/policies.css">
 </head>

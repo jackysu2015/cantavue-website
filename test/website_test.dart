@@ -3,6 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('Sites clean URL redirects preserve the selected language', () {
+    for (final path in ['/en', '/en.html']) {
+      expect(initialLanguage(Uri.parse('https://www.cantavue.com$path')), 'en');
+    }
+    for (final path in ['/zh-Hant', '/zh-Hant.html']) {
+      expect(
+        initialLanguage(Uri.parse('https://www.cantavue.com$path')),
+        'zh-Hant',
+      );
+    }
+    expect(initialLanguage(Uri.parse('https://www.cantavue.com/')), 'zh-Hans');
+  });
+
   Future<void> show(WidgetTester tester, Size size, {double scale = 1}) async {
     final original = FlutterError.onError;
     FlutterError.onError = (details) {

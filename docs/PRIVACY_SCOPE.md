@@ -33,3 +33,5 @@ No new app binary, signature or app behavior is introduced by website/metadata c
 - Four ARB bundles contain 133 messages each. Local font subsets total 1,503,120 bytes; fontTools verified each language's required characters.
 - Navigation bridge checked for three localized routes and mailto; unrelated destinations rejected. No email was sent. No browser screenshots/interaction QA was performed.
 - Main app `dart run tool/check.dart`: exit 1, unchanged 25 formatting differences among 630 Dart files; SDK, lockfile, 4 ARB bundles (1,913 messages) and pinned Web resources passed before the formatting gate. Main app analysis/tests did not execute in that run.
+
+Live hosting normalizes .html URLs to extensionless routes and adds a platform script to responses. Follow-up correction preserves English/Traditional locale after this redirect and uses canonical/sitemap URLs without .html. Added a targeted regression test for both URL forms; final website suite: 6/6 passed. Public response validation accounts for platform injection rather than asserting identical response bytes.

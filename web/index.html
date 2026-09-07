@@ -12,8 +12,8 @@
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.cantavue.com/">
   <link rel="alternate" hreflang="zh-Hans" href="https://www.cantavue.com/">
-<link rel="alternate" hreflang="zh-Hant" href="https://www.cantavue.com/zh-Hant.html">
-<link rel="alternate" hreflang="en" href="https://www.cantavue.com/en.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://www.cantavue.com/zh-Hant">
+<link rel="alternate" hreflang="en" href="https://www.cantavue.com/en">
   <link rel="icon" type="image/png" href="assets/assets/brand.png">
   <link rel="manifest" href="manifest.json">
   <title>CantaVue 谱翎 · 让乐谱轻盈， 让音乐自由。</title>
@@ -39,7 +39,7 @@ window.cantavueSetLocale = function(locale, title, description) {
   document.querySelector('meta[property="og:title"]').content = title;
   document.querySelector('meta[property="og:description"]').content = description;
   const url = new URL(location.href);
-  url.pathname = locale === 'en' ? '/en.html' : locale === 'zh-Hant' ? '/zh-Hant.html' : '/';
+  url.pathname = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-Hant' : '/';
   url.searchParams.delete('lang');
   history.replaceState(null, '', url);
   document.querySelector('link[rel="canonical"]').href = "https://www.cantavue.com" + url.pathname;

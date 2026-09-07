@@ -33,7 +33,7 @@ void main(List<String> args) {
     final title =
         "${text['brandCaption']} · ${text['heroTitle']!.replaceAll('\n', ' ')}";
     final canonical =
-        '$origin/${entry.value.$2 == 'index.html' ? '' : entry.value.$2}';
+        '$origin/${entry.value.$2 == 'index.html' ? '' : entry.value.$2.replaceFirst('.html', '')}';
     final content = StringBuffer(
       '<main id="document"><header><img src="assets/assets/brand.png" alt="" width="48" height="48"><strong>${t('brandCaption')}</strong><nav><a href="/">简体中文</a> · <a href="/zh-Hant.html">繁體中文</a> · <a href="/en.html">English</a></nav></header>',
     );
@@ -82,7 +82,7 @@ void main(List<String> args) {
     final alternates = pages.entries
         .map(
           (p) =>
-              '<link rel="alternate" hreflang="${p.key}" href="$origin/${p.value.$2 == 'index.html' ? '' : p.value.$2}">',
+              '<link rel="alternate" hreflang="${p.key}" href="$origin/${p.value.$2 == 'index.html' ? '' : p.value.$2.replaceFirst('.html', '')}">',
         )
         .join('\n');
     File('web/${entry.value.$2}').writeAsStringSync('''<!DOCTYPE html>
@@ -124,7 +124,7 @@ window.cantavueSetLocale = function(locale, title, description) {
   document.querySelector('meta[property="og:title"]').content = title;
   document.querySelector('meta[property="og:description"]').content = description;
   const url = new URL(location.href);
-  url.pathname = locale === 'en' ? '/en.html' : locale === 'zh-Hant' ? '/zh-Hant.html' : '/';
+  url.pathname = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-Hant' : '/';
   url.searchParams.delete('lang');
   history.replaceState(null, '', url);
   document.querySelector('link[rel="canonical"]').href = ${jsonEncode(origin)} + url.pathname;
@@ -145,6 +145,6 @@ window.cantavueSetLocale = function(locale, title, description) {
     'User-agent: *\nAllow: /\nSitemap: $origin/sitemap.xml\n',
   );
   File('web/sitemap.xml').writeAsStringSync(
-    '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[...pages.values.map((p) => p.$2 == 'index.html' ? '' : p.$2), ...buildPolicies(origin)].map((path) => '<url><loc>$origin/$path</loc></url>').join()}</urlset>\n',
+    '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[...pages.values.map((p) => p.$2 == 'index.html' ? '' : p.$2), ...buildPolicies(origin)].map((path) => '<url><loc>$origin/${path.replaceFirst('.html', '')}</loc></url>').join()}</urlset>\n',
   );
 }

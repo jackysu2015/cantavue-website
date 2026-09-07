@@ -13,6 +13,20 @@ const ink = Color(0xFF10203A);
 const midnight = Color(0xFF111127);
 const feather = Color(0xFFF7F5FD);
 
+String initialLanguage(Uri uri) {
+  final path = uri.path.replaceFirst(RegExp(r'\.html$'), '');
+  return switch (uri.queryParameters['lang'] ??
+      (path == '/en'
+          ? 'en'
+          : path == '/zh-Hant'
+          ? 'zh-Hant'
+          : 'zh-Hans')) {
+    'en' => 'en',
+    'zh-Hant' => 'zh-Hant',
+    _ => 'zh-Hans',
+  };
+}
+
 class CantaVueWebsite extends StatefulWidget {
   const CantaVueWebsite({super.key});
   @override
@@ -20,16 +34,7 @@ class CantaVueWebsite extends StatefulWidget {
 }
 
 class _CantaVueWebsiteState extends State<CantaVueWebsite> {
-  late String language = switch (Uri.base.queryParameters['lang'] ??
-      (Uri.base.path.endsWith('/en.html')
-          ? 'en'
-          : Uri.base.path.endsWith('/zh-Hant.html')
-          ? 'zh-Hant'
-          : 'zh-Hans')) {
-    'en' => 'en',
-    'zh-Hant' => 'zh-Hant',
-    _ => 'zh-Hans',
-  };
+  late String language = initialLanguage(Uri.base);
 
   @override
   Widget build(BuildContext context) => MaterialApp(

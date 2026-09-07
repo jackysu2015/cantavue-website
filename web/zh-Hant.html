@@ -10,10 +10,10 @@
   <meta property="og:description" content="從第一遍讀譜，到下一次登台。譜翎把樂譜、註記與練習，放在同一個專注的空間。">
   <meta property="og:type" content="website">
   <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.cantavue.com/zh-Hant.html">
+  <link rel="canonical" href="https://www.cantavue.com/zh-Hant">
   <link rel="alternate" hreflang="zh-Hans" href="https://www.cantavue.com/">
-<link rel="alternate" hreflang="zh-Hant" href="https://www.cantavue.com/zh-Hant.html">
-<link rel="alternate" hreflang="en" href="https://www.cantavue.com/en.html">
+<link rel="alternate" hreflang="zh-Hant" href="https://www.cantavue.com/zh-Hant">
+<link rel="alternate" hreflang="en" href="https://www.cantavue.com/en">
   <link rel="icon" type="image/png" href="assets/assets/brand.png">
   <link rel="manifest" href="manifest.json">
   <title>CantaVue 譜翎 · 讓樂譜輕盈， 讓音樂自由。</title>
@@ -39,7 +39,7 @@ window.cantavueSetLocale = function(locale, title, description) {
   document.querySelector('meta[property="og:title"]').content = title;
   document.querySelector('meta[property="og:description"]').content = description;
   const url = new URL(location.href);
-  url.pathname = locale === 'en' ? '/en.html' : locale === 'zh-Hant' ? '/zh-Hant.html' : '/';
+  url.pathname = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-Hant' : '/';
   url.searchParams.delete('lang');
   history.replaceState(null, '', url);
   document.querySelector('link[rel="canonical"]').href = "https://www.cantavue.com" + url.pathname;
