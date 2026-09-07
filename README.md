@@ -34,8 +34,16 @@ dart run tool/build.dart
 
 运行时仅使用 Flutter SDK、flutter_localizations 和 SDK 所需 intl 0.20.2；开发检查使用 flutter_test/flutter_lints。与主应用依赖隔离，无新增平台权限。Flutter 和 intl 采用 BSD 系列许可。
 
-Noto Sans SC／TC 400、600、700 各一份，均为 Google Fonts 按公开 ARB 文案生成的 TTF 字符子集，合计 **848,840 字节**。使用 SIL Open Font License 1.1，完整许可证随资产打包。它们让官网中文和英文不依赖外部字体请求，不修改主应用字体。官方来源为 `docs/FONTS.json` 与 `assets/fonts/OFL-*.txt`；`tool/fetch_fonts.py` 可在公开文案改变后刷新。字体源与许可：[Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc)、[Noto Sans TC](https://github.com/google/fonts/tree/main/ofl/notosanstc)。
+Noto Sans SC／TC 400、600、700 各一份，均为 Google Fonts 按公开 ARB 文案生成的 TTF 字符子集，合计 **951,136 字节**。使用 SIL Open Font License 1.1，完整许可证随资产打包。它们让官网中文和英文不依赖外部字体请求，不修改主应用字体。官方来源为 `docs/FONTS.json` 与 `assets/fonts/OFL-*.txt`；`tool/fetch_fonts.py` 可在公开文案改变后刷新。字体源与许可：[Noto Sans SC](https://github.com/google/fonts/tree/main/ofl/notosanssc)、[Noto Sans TC](https://github.com/google/fonts/tree/main/ofl/notosanstc)。
 
 ## 验证
 
 结果记录在主项目 `docs/STATUS.md` 的“宣传官网”条目。网站有独立 5 项测试，覆盖桌面导航返回、切换英文及 FAQ 展开、三语 320 px／200% 字号和窄屏菜单。没有本轮浏览器自动操作或实体设备视觉验收；不把官网构建当作应用功能验收。
+
+## 2026-09-07 场景图片补充
+
+“为音乐而作”增加小提琴教学、乐团演出与脚踏翻页三张原创场景图。桌面先并排教学与乐团，再用宽行展示脚踏、谱架和双手演奏的关系；窄屏按相同阅读顺序纵向排布。原有钢琴主视觉与准备流程保留。新增 14 条文案及图片替代描述，4 个 ARB 各 78 条，静态三语文档同步包含图片、替代文本与设备验证边界。
+
+三张 WebP 各 1536×1024，保留完整 3:2 构图，质量 86，合计 **443,760 字节**。未裁切、添加品牌或模拟操作动画。来源和限制见 `docs/SCENE_PROVENANCE.md`；运行时文件大小与 SHA-256 见 `docs/SCENE_ASSETS.json`。场景是合成使用示意，不是实际用户案例、课堂管理、乐团同步或硬件认证证据。脚踏图表现一个脚踩开关的静止瞬间，不能作为已完成翻页的证明；正文明确兼容键盘式脚踏和真机仍待验证。
+
+本轮仍未改变主应用、185 条需求记录、访问受众或正式域名。

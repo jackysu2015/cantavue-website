@@ -1,0 +1,36 @@
+{
+  "generated": "2026-09-07",
+  "format": "WebP, quality 86; full frame, no metadata",
+  "assets": [
+    {
+      "file": "violin_lesson.webp",
+      "source": "violin-lesson.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "bytes": 132024,
+      "sha256": "a0d67c39d5762d99fe938f5501b98b3050e399d5eb898aee66b771e767105dd7"
+    },
+    {
+      "file": "ensemble_stage.webp",
+      "source": "ensemble-stage.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "bytes": 157538,
+      "sha256": "d5a033ca1e72bc5ed4a81e01eb09330bf4286e2873bee0e99097c6c73f3bc7cc"
+    },
+    {
+      "file": "pedal_page_turn.webp",
+      "source": "pedal-page-turn.png",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "bytes": 154198,
+      "sha256": "6d971fa0764b7ef5d4f4feffc82f0992bb0d531753b864df8612ce3ef86b4324"
+    }
+  ]
+}

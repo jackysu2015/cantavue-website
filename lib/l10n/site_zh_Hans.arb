@@ -63,5 +63,19 @@
   "backTop": "回到顶部",
   "footerLine": "为每一页热爱，留一片自由。",
   "footerCopyright": "© 2026 CantaVue 谱翎",
-  "footerPrivacy": "本站不设注册、订阅表单或访客统计。"
+  "footerPrivacy": "本站不设注册、订阅表单或访客统计。",
+  "sceneLessonTag": "小提琴教学",
+  "sceneLessonTitle": "讲到哪里，就记在哪里。",
+  "sceneLessonBody": "把弓法、指法与乐句重点直接标在谱上，让示范与讲解围绕同一页展开。",
+  "sceneLessonAlt": "小提琴老师与成年学生在琴房中一起查看平板乐谱，老师用触控笔讲解。",
+  "sceneEnsembleTag": "乐团演出",
+  "sceneEnsembleTitle": "带上准备好的每一页。",
+  "sceneEnsembleBody": "按演出顺序整理曲单，在登台前准备好各自需要的谱面，把注意力留给彼此的音乐。",
+  "sceneEnsembleAlt": "弦乐团在温暖灯光的舞台演奏，演奏者在各自谱架上使用平板乐谱。",
+  "scenePedalTag": "脚踏翻页",
+  "scenePedalTitle": "双手留给演奏，\n翻页交给脚下。",
+  "scenePedalBody": "使用兼容的键盘式翻页脚踏，控制上一页与下一页，让双手继续留在乐器上。",
+  "scenePedalNote": "脚踏需先在系统中连接；具体型号兼容性与真机体验仍在验证。",
+  "scenePedalAlt": "大提琴演奏者双手持琴，右脚操作双键翻页脚踏，前方谱架上显示平板乐谱。",
+  "sceneImageNote": "场景图片为 AI 生成的使用示意，不是应用截图或真实用户案例。"
 }

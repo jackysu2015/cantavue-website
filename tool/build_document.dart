@@ -51,6 +51,18 @@ void main(List<String> args) {
     content.write(
       '<p>${t('featureNote')}</p></section><section><h2>${t('workflowTitle')}</h2><p>${t('workflowBody')}</p>',
     );
+    for (final scene in [
+      ('Lesson', 'violin_lesson'),
+      ('Ensemble', 'ensemble_stage'),
+      ('Pedal', 'pedal_page_turn'),
+    ]) {
+      content.write(
+        '<article><img class="scene" src="assets/assets/scenes/${scene.$2}.webp" alt="${t('scene${scene.$1}Alt')}" width="1536" height="1024" loading="lazy"><p>${t('scene${scene.$1}Tag')}</p><h3>${t('scene${scene.$1}Title')}</h3><p>${t('scene${scene.$1}Body')}</p>',
+      );
+      if (scene.$1 == 'Pedal') content.write('<p>${t('scenePedalNote')}</p>');
+      content.write('</article>');
+    }
+    content.write('<p>${t('sceneImageNote')}</p>');
     for (var i = 1; i <= 3; i++) {
       content.write(
         '<article><h3>${t('step${i}Title')}</h3><p>${t('step${i}Body')}</p></article>',
@@ -93,7 +105,7 @@ void main(List<String> args) {
   <style>
     html,body{margin:0;background:#111127;color:#fff;font:17px/1.8 system-ui,-apple-system,sans-serif}*{box-sizing:border-box}
     #document{max-width:1100px;margin:auto;padding:32px 24px}header{display:flex;align-items:center;gap:14px;flex-wrap:wrap}header img{border-radius:12px}nav{font-size:14px}
-    section{padding:54px 0;border-bottom:1px solid #38334e}h1{font-size:clamp(38px,6vw,68px);line-height:1.25;letter-spacing:-1.5px}h2{font-size:34px;line-height:1.35}p{max-width:780px;color:#d1cfe1}article{margin:32px 0}a{color:#cbc4ff}summary{cursor:pointer;padding:14px 0}footer{padding:32px 0;font-size:14px}
+    .scene{display:block;width:100%;max-width:780px;height:auto;border-radius:16px}section{padding:54px 0;border-bottom:1px solid #38334e}h1{font-size:clamp(38px,6vw,68px);line-height:1.25;letter-spacing:-1.5px}h2{font-size:34px;line-height:1.35}p{max-width:780px;color:#d1cfe1}article{margin:32px 0}a{color:#cbc4ff}summary{cursor:pointer;padding:14px 0}footer{padding:32px 0;font-size:14px}
   </style>
 </head>
 <body>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/generated/site_localizations.dart';
+import 'scenario_gallery.dart';
 import 'browser_stub.dart'
     if (dart.library.js_interop) 'browser_web.dart'
     as browser;
@@ -475,17 +476,19 @@ class _HomePageState extends State<HomePage> {
                       key: sections[2],
                       color: feather,
                       child: _Section(
-                        child: _Columns(
-                          wide: wide,
-                          gap: 84,
-                          left: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _Eyebrow(s.workflowEyebrow),
-                              const SizedBox(height: 20),
-                              _Headline(s.workflowTitle, size: wide ? 48 : 36),
-                              const SizedBox(height: 24),
-                              Text(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _Eyebrow(s.workflowEyebrow),
+                            const SizedBox(height: 20),
+                            _Columns(
+                              wide: wide,
+                              gap: 64,
+                              left: _Headline(
+                                s.workflowTitle,
+                                size: wide ? 48 : 36,
+                              ),
+                              right: Text(
                                 s.workflowBody,
                                 style: const TextStyle(
                                   fontSize: 18,
@@ -493,53 +496,59 @@ class _HomePageState extends State<HomePage> {
                                   color: Color(0xFF667084),
                                 ),
                               ),
-                              const SizedBox(height: 28),
+                            ),
+                            const SizedBox(height: 44),
+                            ScenarioGallery(wide: wide),
+                            const SizedBox(height: 52),
+                            if (wide)
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(18),
-                                    child: Image.asset(
-                                      'assets/brand.png',
-                                      width: 72,
-                                      height: 72,
-                                      excludeFromSemantics: true,
+                                  Expanded(
+                                    child: _Step(
+                                      number: '01',
+                                      title: s.step1Title,
+                                      body: s.step1Body,
                                     ),
                                   ),
-                                  const SizedBox(width: 20),
-                                  Flexible(
-                                    child: Text(
-                                      s.brandCaption,
-                                      style: const TextStyle(
-                                        fontSize: 23,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  const SizedBox(width: 32),
+                                  Expanded(
+                                    child: _Step(
+                                      number: '02',
+                                      title: s.step2Title,
+                                      body: s.step2Body,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 32),
+                                  Expanded(
+                                    child: _Step(
+                                      number: '03',
+                                      title: s.step3Title,
+                                      body: s.step3Body,
                                     ),
                                   ),
                                 ],
-                              ),
-                            ],
-                          ),
-                          right: Column(
-                            children: [
+                              )
+                            else ...[
                               _Step(
                                 number: '01',
                                 title: s.step1Title,
                                 body: s.step1Body,
                               ),
-                              const Divider(height: 48),
+                              const Divider(height: 40),
                               _Step(
                                 number: '02',
                                 title: s.step2Title,
                                 body: s.step2Body,
                               ),
-                              const Divider(height: 48),
+                              const Divider(height: 40),
                               _Step(
                                 number: '03',
                                 title: s.step3Title,
                                 body: s.step3Body,
                               ),
                             ],
-                          ),
+                          ],
                         ),
                       ),
                     ),

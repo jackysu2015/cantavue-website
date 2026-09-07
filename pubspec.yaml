@@ -21,6 +21,7 @@ flutter:
   assets:
     - assets/brand.png
     - assets/hero.png
+    - assets/scenes/
     - assets/fonts/OFL-NotoSansSC.txt
     - assets/fonts/OFL-NotoSansTC.txt
   fonts:

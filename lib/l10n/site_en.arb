@@ -63,5 +63,19 @@
   "backTop": "Back to top",
   "footerLine": "A little more room for the music.",
   "footerCopyright": "© 2026 CantaVue",
-  "footerPrivacy": "No registration, subscription forms or visitor analytics."
+  "footerPrivacy": "No registration, subscription forms or visitor analytics.",
+  "sceneLessonTag": "VIOLIN LESSONS",
+  "sceneLessonTitle": "Teach the phrase. Mark the moment.",
+  "sceneLessonBody": "Mark bowing, fingering and phrasing directly on the score, keeping the demonstration and discussion on the same page.",
+  "sceneLessonAlt": "A violin teacher and an adult student study a tablet score together in a music studio. The teacher points with a stylus.",
+  "sceneEnsembleTag": "ENSEMBLE PERFORMANCE",
+  "sceneEnsembleTitle": "Take every prepared page on stage.",
+  "sceneEnsembleBody": "Arrange your setlist and prepare your own scores before stepping on stage, with more attention left for the music around you.",
+  "sceneEnsembleAlt": "A string ensemble performs on a warmly lit stage with individual tablet scores on music stands.",
+  "scenePedalTag": "PEDAL PAGE TURNING",
+  "scenePedalTitle": "Hands on the music.\nA foot on the next page.",
+  "scenePedalBody": "Use a compatible keyboard-style page-turn pedal for the previous or next page, while your hands stay on your instrument.",
+  "scenePedalNote": "Connect the pedal through your device first. Model compatibility and real-device experience are still being validated.",
+  "scenePedalAlt": "A cellist plays with both hands while operating a two-switch page-turn pedal with the right foot. A tablet score is visible on the stand.",
+  "sceneImageNote": "AI-generated illustrations of use, not app screenshots or actual customer stories."
 }
