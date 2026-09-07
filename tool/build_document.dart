@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'build_policies.dart';
 
 // Search-readable HTML and Flutter use the same localized copy.
 void main(List<String> args) {
-  final origin = args.isEmpty
-      ? 'https://cantavue.supingjing.chatgpt.site'
-      : args.single;
+  final origin = args.isEmpty ? 'https://www.cantavue.com' : args.single;
   final uri = Uri.parse(origin);
   if (uri.scheme != 'https' ||
       uri.host.isEmpty ||
+      (uri.path.isNotEmpty && uri.path != '/') ||
       uri.hasQuery ||
       uri.hasFragment) {
     throw ArgumentError('A trusted HTTPS site origin is required.');
@@ -77,7 +77,7 @@ void main(List<String> args) {
       );
     }
     content.write(
-      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p></section><footer>${t('footerCopyright')}<p>${t('footerPrivacy')}</p></footer></main>',
+      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p></section><footer>${t('footerCopyright')}${policyNavigation(locale, text)}<p>${t('footerPrivacy')}</p></footer></main>',
     );
     final alternates = pages.entries
         .map(
@@ -111,6 +111,12 @@ void main(List<String> args) {
 <body>
 $content
 <script>
+window.cantavueNavigate = function(destination) {
+  const paths = ${jsonEncode(policyLanguages.keys.expand((locale) => policyPages.keys.map((page) => '/${policyPath(page, locale)}')).toList())};
+  if (paths.includes(destination) || destination === 'mailto:info@cantavue.com') {
+    location.assign(destination);
+  }
+};
 window.cantavueSetLocale = function(locale, title, description) {
   document.documentElement.lang = locale;
   document.title = title;
@@ -139,6 +145,6 @@ window.cantavueSetLocale = function(locale, title, description) {
     'User-agent: *\nAllow: /\nSitemap: $origin/sitemap.xml\n',
   );
   File('web/sitemap.xml').writeAsStringSync(
-    '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${pages.values.map((p) => '<url><loc>$origin/${p.$2 == 'index.html' ? '' : p.$2}</loc></url>').join()}</urlset>\n',
+    '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${[...pages.values.map((p) => p.$2 == 'index.html' ? '' : p.$2), ...buildPolicies(origin)].map((path) => '<url><loc>$origin/$path</loc></url>').join()}</urlset>\n',
   );
 }

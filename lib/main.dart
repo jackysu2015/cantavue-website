@@ -59,6 +59,7 @@ class _CantaVueWebsiteState extends State<CantaVueWebsite> {
       ),
       fontFamily: language == 'zh-Hant' ? 'CantaSansTC' : 'CantaSansSC',
       fontFamilyFallback: const [
+        'CantaSansSC',
         'PingFang SC',
         'Microsoft YaHei',
         'Noto Sans CJK SC',
@@ -731,10 +732,35 @@ class _HomePageState extends State<HomePage> {
                             ],
                           ),
                           const SizedBox(height: 12),
+                          Wrap(
+                            spacing: 12,
+                            runSpacing: 8,
+                            children: [
+                              for (final page in [
+                                ('privacy', s.policyPrivacy),
+                                ('terms', s.policyTerms),
+                                ('support', s.policySupport),
+                              ])
+                                TextButton(
+                                  onPressed: () => browser.navigate(
+                                    '/${page.$1}${widget.language == 'zh-Hans' ? '' : '-${widget.language}'}.html',
+                                  ),
+                                  child: Text(page.$2),
+                                ),
+                              TextButton.icon(
+                                onPressed: () => browser.navigate(
+                                  'mailto:${s.feedbackEmail}',
+                                ),
+                                icon: const Icon(Icons.mail_outline, size: 18),
+                                label: Text(s.feedbackEmail),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
                           Text(
                             s.footerPrivacy,
                             style: const TextStyle(
-                              fontSize: 12,
+                              fontSize: 14,
                               color: Color(0xFF667084),
                             ),
                           ),
