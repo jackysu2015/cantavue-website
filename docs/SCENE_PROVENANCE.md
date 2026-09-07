@@ -1,5 +1,7 @@
 # CantaVue website scenario image provenance
 
+Current pedal asset: the original pedal generation below has been superseded by the user-requested alignment edit, exported from `pedal-page-turn-aligned-v2.png`. See [alignment edit record](PEDAL_ALIGNMENT.md) and `SCENE_ASSETS.json` for the current selection and hash. The original generation notes below are historical.
+
 Created 2026-09-07 for the website scenario imagery request. Exactly three independent native built-in OpenAI imagegen calls were issued concurrently, one for each requested image. No variants, edits, retries, external image references, private scores, or real product screenshots were used. No website checkout was edited and no Sites tools or skills were invoked.
 
 All final assets were copied unchanged from the native generation output into this directory. File dimensions were independently checked: each is 1536 × 1024 pixels, PNG, landscape 3:2. The images are AI-generated conceptual editorial lifestyle photography; notation, people, hardware, and environments are synthetic. No playable-score accuracy or device behavior is claimed.

@@ -24,13 +24,13 @@
     },
     {
       "file": "pedal_page_turn.webp",
-      "source": "pedal-page-turn.png",
+      "source": "pedal-page-turn-aligned-v2.png",
       "dimensions": [
         1536,
         1024
       ],
-      "bytes": 154198,
-      "sha256": "6d971fa0764b7ef5d4f4feffc82f0992bb0d531753b864df8612ce3ef86b4324"
+      "bytes": 153404,
+      "sha256": "b9a426b9ccb354f83fc43c71cc1567ef2e0bbd037d6c2588edb0b4fcf806fd58"
     }
   ]
 }
