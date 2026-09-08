@@ -18,6 +18,7 @@ void main(List<String> args) {
     'zh-Hant': ('zh_Hant', 'zh-Hant.html'),
     'en': ('en', 'en.html'),
   };
+  const testFlightUrl = 'https://testflight.apple.com/join/3WdM1PdG';
   for (final entry in pages.entries) {
     final locale = entry.key;
     final text =
@@ -77,7 +78,7 @@ void main(List<String> args) {
       );
     }
     content.write(
-      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p></section><footer>${t('footerCopyright')}${policyNavigation(locale, text)}<p>${t('footerPrivacy')}</p></footer></main>',
+      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p><p><a href="${Uri.encodeFull(testFlightUrl)}" rel="noopener noreferrer">${t('releaseLinkLabel')}</a></p></section><footer>${t('footerCopyright')}${policyNavigation(locale, text)}<p>${t('footerPrivacy')}</p></footer></main>',
     );
     final alternates = pages.entries
         .map(
