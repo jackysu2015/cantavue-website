@@ -34,5 +34,24 @@ Future<void> main(List<String> args) async {
       entity.copySync('dist/$relative');
     }
   }
+  // A new release must not reuse a cached loader or application bundle.
+  final revision = DateTime.now().toUtc().microsecondsSinceEpoch.toString();
+  final bootstrap = File('dist/flutter_bootstrap.js');
+  bootstrap.writeAsStringSync(
+    bootstrap.readAsStringSync().replaceAll(
+      'main.dart.js',
+      'main.dart.js?v=$revision',
+    ),
+  );
+  for (final file in destination.listSync().whereType<File>()) {
+    if (file.path.endsWith('.html')) {
+      file.writeAsStringSync(
+        file.readAsStringSync().replaceAll(
+          'src="flutter_bootstrap.js"',
+          'src="flutter_bootstrap.js?v=$revision"',
+        ),
+      );
+    }
+  }
   stdout.writeln('Static website ready in dist/');
 }

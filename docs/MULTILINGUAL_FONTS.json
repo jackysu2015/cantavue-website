@@ -1,0 +1,49 @@
+{
+  "license": "SIL OFL 1.1",
+  "tool": "fonttools, development only",
+  "fonts": [
+    {
+      "family": "CantaMultilingual",
+      "file": "assets/fonts/NotoSans-Regular.ttf",
+      "bytes": 93780,
+      "sha256": "d120578250f92bc03f3223851aeedb8edd1328ed101a5830f7529347836610f8",
+      "sourceSha256": "b85c38ecea8a7cfb39c24e395a4007474fa5a4fc864f6ee33309eb4948d232d5"
+    },
+    {
+      "family": "CantaArabic",
+      "file": "assets/fonts/NotoSansArabic-Variable.ttf",
+      "bytes": 178296,
+      "sha256": "0559f59732be48c35d5faadfe94fd6f903fe59d881122363e37d68284ac8a03a",
+      "sourceSha256": "63111b5b2e074dd48cc67692e0a2726d86ee94c1c37fe8598257b7b4e87e869e"
+    },
+    {
+      "family": "CantaHebrew",
+      "file": "assets/fonts/NotoSansHebrew-Variable.ttf",
+      "bytes": 57656,
+      "sha256": "c5fe269b54b67386c2c26e6c0fe0fb3182ce7d3d63d3de6d13553bca2ba5a9db",
+      "sourceSha256": "7ef36a2c3593758cdb622e1bdef4f84523e92fbc3ccc667438dd80ff54c2de88"
+    },
+    {
+      "family": "CantaDevanagari",
+      "file": "assets/fonts/NotoSansDevanagari-Variable.ttf",
+      "bytes": 424844,
+      "sha256": "b325fa799f32435c760e9f211455965b276ed753a39f8057efd7bc0b3f911553",
+      "sourceSha256": "9ce7b04f60e363d8870e5997744cf85cf69d38a4d7d129d364d92a3b14b461d7"
+    },
+    {
+      "family": "CantaThai",
+      "file": "assets/fonts/NotoSansThai-Variable.ttf",
+      "bytes": 144916,
+      "sha256": "0b6352340c849e4c802825a9faca56fc7350e9739a5899d362457a7071000187",
+      "sourceSha256": "5a1c559bb539583c8a1fd99d1c5b9491e5e14478c9cd2bd0970d5c3096cc9ef8"
+    },
+    {
+      "family": "CantaCJK",
+      "file": "assets/fonts/NotoSansCJKsc-Regular.otf",
+      "bytes": 748264,
+      "sha256": "f0934dad0e9149841cb94be518f0b297a6d38d2de2e6bccbb3f9e98aeffff884",
+      "sourceSha256": "2c76254f6fc379fddfce0a7e84fb5385bb135d3e399294f6eeb6680d0365b74b"
+    }
+  ],
+  "missingGlyphs": []
+}

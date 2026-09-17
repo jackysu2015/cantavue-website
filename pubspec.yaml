@@ -11,6 +11,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: 0.20.2
+  # Supplies the font used by reachable adaptive Flutter controls; MIT, no plugin.
+  cupertino_icons: 1.0.9
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -24,6 +26,7 @@ flutter:
     - assets/scenes/
     - assets/fonts/OFL-NotoSansSC.txt
     - assets/fonts/OFL-NotoSansTC.txt
+    - assets/fonts/OFL-Multilingual.txt
   fonts:
     - family: CantaSansSC
       fonts:
@@ -41,3 +44,21 @@ flutter:
           weight: 600
         - asset: assets/fonts/NotoSansTC-700.ttf
           weight: 700
+    - family: CantaMultilingual
+      fonts:
+        - asset: assets/fonts/NotoSans-Regular.ttf
+    - family: CantaArabic
+      fonts:
+        - asset: assets/fonts/NotoSansArabic-Variable.ttf
+    - family: CantaHebrew
+      fonts:
+        - asset: assets/fonts/NotoSansHebrew-Variable.ttf
+    - family: CantaDevanagari
+      fonts:
+        - asset: assets/fonts/NotoSansDevanagari-Variable.ttf
+    - family: CantaThai
+      fonts:
+        - asset: assets/fonts/NotoSansThai-Variable.ttf
+    - family: CantaCJK
+      fonts:
+        - asset: assets/fonts/NotoSansCJKsc-Regular.otf

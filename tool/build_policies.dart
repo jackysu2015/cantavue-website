@@ -1,3 +1,4 @@
+import 'package:cantavue_website/site_languages.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -6,10 +7,9 @@ const policyPages = {
   'terms': ('policyTerms', 6),
   'support': ('policySupport', 4),
 };
-const policyLanguages = {
-  'zh-Hans': ('zh_Hans', '简体中文', '/'),
-  'zh-Hant': ('zh_Hant', '繁體中文', '/zh-Hant.html'),
-  'en': ('en', 'English', '/en.html'),
+final policyLanguages = {
+  for (final entry in siteLanguages.entries)
+    entry.key: (siteArbLocale(entry.key), entry.value, siteHomePath(entry.key)),
 };
 
 String policyPath(String page, String language) =>
@@ -64,7 +64,7 @@ List<String> buildPolicies(String origin) {
         body.write('</ul></section>');
       }
       File('web/$path').writeAsStringSync('''<!DOCTYPE html>
-<html lang="${language.key}">
+<html lang="${language.key}" dir="${siteIsRtl(language.key) ? 'rtl' : 'ltr'}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,11 +76,12 @@ List<String> buildPolicies(String origin) {
   ${policyLanguages.keys.map((locale) => '<link rel="alternate" hreflang="$locale" href="$origin/${policyPath(kind, locale).replaceFirst('.html', '')}">').join('\n')}
   <link rel="icon" type="image/png" href="/assets/assets/brand.png">
   <link rel="stylesheet" href="/policies.css">
+  <link rel="stylesheet" href="/multilingual-fonts.css">
 </head>
 <body>
-<header class="site-header"><a class="brand" href="${language.value.$3}"><img src="/assets/assets/brand.png" width="42" height="42" alt=""><span>CantaVue</span></a><nav aria-label="${t('policyHome')}">${policyLanguages.entries.map((locale) => '<a href="/${policyPath(kind, locale.key)}" lang="${locale.key}"${locale.key == language.key ? ' aria-current="page"' : ''}>${locale.value.$2}</a>').join(' ')}</nav></header>
+<header class="site-header"><a class="brand" href="${language.value.$3}"><img src="/assets/assets/brand.png" width="42" height="42" alt=""><span>CantaVue</span></a><details><summary>${t('language')}</summary><nav aria-label="${t('language')}">${policyLanguages.entries.map((locale) => '<a href="/${policyPath(kind, locale.key)}" lang="${locale.key}"${locale.key == language.key ? ' aria-current="page"' : ''}>${locale.value.$2}</a>').join(' ')}</nav></details></header>
 <main>
-  <a class="back" href="${language.value.$3}">← ${t('policyHome')}</a>
+  <a class="back" href="${language.value.$3}">${siteIsRtl(language.key) ? '→' : '←'} ${t('policyHome')}</a>
   <div class="intro"><p class="eyebrow">CantaVue · ${t('brandCaption')}</p><h1>$title</h1><p class="date">${t('policyUpdated')}</p><p>${t('${kind}Intro')}</p>${kind == 'support' ? '<a class="email-button" href="mailto:info@cantavue.com">${t('supportEmailAction')} ↗</a>' : ''}</div>
   <div class="document-layout"><aside><nav aria-label="${t('policyContents')}"><strong>${t('policyContents')}</strong><ol>${List.generate(page.value.$2, (i) => '<li><a href="#section-${i + 1}">${t('$kind${i + 1}Title')}</a></li>').join()}</ol></nav></aside><article>$body</article></div>
 </main>

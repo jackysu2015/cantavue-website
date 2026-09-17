@@ -1,3 +1,6 @@
+import 'site_typography.dart';
+import 'site_languages.dart';
+export 'site_languages.dart' show initialLanguage;
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'l10n/generated/site_localizations.dart';
@@ -13,35 +16,34 @@ const ink = Color(0xFF10203A);
 const midnight = Color(0xFF111127);
 const feather = Color(0xFFF7F5FD);
 
-String initialLanguage(Uri uri) {
-  final path = uri.path.replaceFirst(RegExp(r'\.html$'), '');
-  return switch (uri.queryParameters['lang'] ??
-      (path == '/en'
-          ? 'en'
-          : path == '/zh-Hant'
-          ? 'zh-Hant'
-          : 'zh-Hans')) {
-    'en' => 'en',
-    'zh-Hant' => 'zh-Hant',
-    _ => 'zh-Hans',
-  };
-}
+const siteFontFallback = [
+  'CantaSansSC',
+  'CantaMultilingual',
+  'CantaArabic',
+  'CantaHebrew',
+  'CantaDevanagari',
+  'CantaThai',
+  'CantaCJK',
+];
 
 class CantaVueWebsite extends StatefulWidget {
-  const CantaVueWebsite({super.key});
+  const CantaVueWebsite({this.initialUri, super.key});
+  final Uri? initialUri;
   @override
   State<CantaVueWebsite> createState() => _CantaVueWebsiteState();
 }
 
 class _CantaVueWebsiteState extends State<CantaVueWebsite> {
-  late String language = initialLanguage(Uri.base);
+  late String language = initialLanguage(
+    widget.initialUri ?? browser.currentUri(),
+  );
 
   @override
   Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'CantaVue · 谱翎',
-    locale: language == 'en'
-        ? const Locale('en')
+    locale: !language.startsWith('zh-')
+        ? Locale(language)
         : Locale.fromSubtags(
             languageCode: 'zh',
             scriptCode: language == 'zh-Hant' ? 'Hant' : 'Hans',
@@ -65,6 +67,12 @@ class _CantaVueWebsiteState extends State<CantaVueWebsite> {
       fontFamily: language == 'zh-Hant' ? 'CantaSansTC' : 'CantaSansSC',
       fontFamilyFallback: const [
         'CantaSansSC',
+        'CantaMultilingual',
+        'CantaArabic',
+        'CantaHebrew',
+        'CantaDevanagari',
+        'CantaThai',
+        'CantaCJK',
         'PingFang SC',
         'Microsoft YaHei',
         'Noto Sans CJK SC',
@@ -82,14 +90,24 @@ class _CantaVueWebsiteState extends State<CantaVueWebsite> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),
-          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+          textStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            fontFamily: language == 'zh-Hant' ? 'CantaSansTC' : 'CantaSansSC',
+            fontFamilyFallback: siteFontFallback,
+          ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: ink,
           minimumSize: const Size(44, 48),
-          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+          textStyle: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            fontFamily: language == 'zh-Hant' ? 'CantaSansTC' : 'CantaSansSC',
+            fontFamilyFallback: siteFontFallback,
+          ),
         ),
       ),
       dividerColor: const Color(0xFFE6E6EF),
@@ -141,7 +159,33 @@ class _HomePageState extends State<HomePage> {
     );
     final width = MediaQuery.sizeOf(context).width;
     final wide =
-        width >= 980 && MediaQuery.textScalerOf(context).scale(1) < 1.5;
+        width >= 1240 && MediaQuery.textScalerOf(context).scale(1) < 1.5;
+    double labelWidth(String text, double size) {
+      final painter = TextPainter(
+        text: TextSpan(
+          text: text,
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+            fontSize: size,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        textDirection: Directionality.of(context),
+        textScaler: MediaQuery.textScalerOf(context),
+      )..layout();
+      final result = painter.width;
+      painter.dispose();
+      return result;
+    }
+
+    final navigationWidth =
+        500 +
+        labelWidth(s.navFeatures, 14) +
+        labelWidth(s.navWorkflow, 14) +
+        labelWidth(s.navFaq, 14) +
+        labelWidth(s.navStatus, 16) +
+        labelWidth(siteLanguages[widget.language]!, 14);
+    final expandedNavigation =
+        wide && navigationWidth <= (width.clamp(0, 1328) - 96);
     return Scaffold(
       body: Column(
         children: [
@@ -194,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       const Spacer(),
-                      if (wide) ...[
+                      if (expandedNavigation) ...[
                         TextButton(
                           onPressed: () => jump(1),
                           child: Text(s.navFeatures),
@@ -214,10 +258,12 @@ class _HomePageState extends State<HomePage> {
                         tooltip: s.language,
                         initialValue: widget.language,
                         onSelected: widget.onLanguage,
-                        itemBuilder: (_) => const [
-                          PopupMenuItem(value: 'zh-Hans', child: Text('简体中文')),
-                          PopupMenuItem(value: 'zh-Hant', child: Text('繁體中文')),
-                          PopupMenuItem(value: 'en', child: Text('English')),
+                        itemBuilder: (_) => [
+                          for (final entry in siteLanguages.entries)
+                            PopupMenuItem(
+                              value: entry.key,
+                              child: Text(entry.value),
+                            ),
                         ],
                         child: Padding(
                           padding: const EdgeInsets.all(12),
@@ -225,21 +271,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               const Icon(Icons.language_rounded, size: 20),
-                              if (width >= 700 ||
-                                  MediaQuery.textScalerOf(context).scale(1) <
-                                      1.5) ...[
+                              if (width >= 700) ...[
                                 const SizedBox(width: 8),
-                                Text(switch (widget.language) {
-                                  'en' => 'English',
-                                  'zh-Hant' => '繁體中文',
-                                  _ => '简体中文',
-                                }, style: const TextStyle(fontSize: 14)),
+                                Text(
+                                  siteLanguages[widget.language]!,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
                               ],
                             ],
                           ),
                         ),
                       ),
-                      if (wide) ...[
+                      if (expandedNavigation) ...[
                         const SizedBox(width: 24),
                         FilledButton(
                           onPressed: () => jump(4),
@@ -860,7 +903,7 @@ class _Headline extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         height: 1.24,
-        letterSpacing: -1.5,
+        letterSpacing: siteTracking(context, -1.5),
         fontWeight: FontWeight.w700,
         color: color,
       ),
@@ -877,7 +920,7 @@ class _Eyebrow extends StatelessWidget {
     text,
     style: TextStyle(
       fontSize: 13,
-      letterSpacing: 1.2,
+      letterSpacing: siteTracking(context, 1.2),
       height: 1.6,
       fontWeight: FontWeight.w600,
       color: color,
@@ -938,11 +981,11 @@ class _FeatureCard extends StatelessWidget {
           const SizedBox(height: 36),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 26,
               height: 1.4,
               fontWeight: FontWeight.w600,
-              letterSpacing: -.6,
+              letterSpacing: siteTracking(context, -.6),
             ),
           ),
           const SizedBox(height: 14),
@@ -1014,7 +1057,7 @@ class _Faq extends StatelessWidget {
     ),
     child: ExpansionTile(
       tilePadding: const EdgeInsets.symmetric(vertical: 10),
-      childrenPadding: const EdgeInsets.only(bottom: 24, right: 24),
+      childrenPadding: const EdgeInsetsDirectional.only(bottom: 24, end: 24),
       shape: const Border(),
       collapsedShape: const Border(),
       title: Text(

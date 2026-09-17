@@ -1,3 +1,4 @@
+import 'package:cantavue_website/site_languages.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'build_policies.dart';
@@ -13,10 +14,12 @@ void main(List<String> args) {
       uri.hasFragment) {
     throw ArgumentError('A trusted HTTPS site origin is required.');
   }
-  const pages = {
-    'zh-Hans': ('zh_Hans', 'index.html'),
-    'zh-Hant': ('zh_Hant', 'zh-Hant.html'),
-    'en': ('en', 'en.html'),
+  final pages = {
+    for (final language in siteLanguages.keys)
+      language: (
+        siteArbLocale(language),
+        language == 'zh-Hans' ? 'index.html' : '$language.html',
+      ),
   };
   const testFlightUrl = 'https://testflight.apple.com/join/3WdM1PdG';
   for (final entry in pages.entries) {
@@ -36,7 +39,7 @@ void main(List<String> args) {
     final canonical =
         '$origin/${entry.value.$2 == 'index.html' ? '' : entry.value.$2.replaceFirst('.html', '')}';
     final content = StringBuffer(
-      '<main id="document"><header><img src="assets/assets/brand.png" alt="" width="48" height="48"><strong>${t('brandCaption')}</strong><nav><a href="/">简体中文</a> · <a href="/zh-Hant.html">繁體中文</a> · <a href="/en.html">English</a></nav></header>',
+      '<main id="document"><header><img src="assets/assets/brand.png" alt="" width="48" height="48"><strong>${t('brandCaption')}</strong><details><summary>${t('language')}</summary><nav>${siteLanguages.entries.map((language) => '<a href="${siteHomePath(language.key)}" lang="${language.key}">${language.value}</a>').join(' · ')}</nav></details></header>',
     );
     content.write(
       '<section><p>${t('eyebrow')}</p><h1>${t('heroTitle')}</h1><p>${t('heroBody')}</p><p>${t('heroNote')}</p><a href="#release">${t('releaseCta')}</a></section>',
@@ -87,7 +90,7 @@ void main(List<String> args) {
         )
         .join('\n');
     File('web/${entry.value.$2}').writeAsStringSync('''<!DOCTYPE html>
-<html lang="$locale">
+<html lang="$locale" dir="${siteIsRtl(locale) ? 'rtl' : 'ltr'}">
 <head>
   <base href="/">
   <meta charset="UTF-8">
@@ -103,8 +106,10 @@ void main(List<String> args) {
   <link rel="icon" type="image/png" href="assets/assets/brand.png">
   <link rel="manifest" href="manifest.json">
   <title>${const HtmlEscape().convert(title)}</title>
+  <link rel="stylesheet" href="/policies.css">
+  <link rel="stylesheet" href="/multilingual-fonts.css">
   <style>
-    html,body{margin:0;background:#111127;color:#fff;font:17px/1.8 system-ui,-apple-system,sans-serif}*{box-sizing:border-box}
+    html,body{margin:0;background:#111127;color:#fff;font-size:17px;line-height:1.8}*{box-sizing:border-box}
     #document{max-width:1100px;margin:auto;padding:32px 24px}header{display:flex;align-items:center;gap:14px;flex-wrap:wrap}header img{border-radius:12px}nav{font-size:14px}
     .scene{display:block;width:100%;max-width:780px;height:auto;border-radius:16px}section{padding:54px 0;border-bottom:1px solid #38334e}h1{font-size:clamp(38px,6vw,68px);line-height:1.25;letter-spacing:-1.5px}h2{font-size:34px;line-height:1.35}p{max-width:780px;color:#d1cfe1}article{margin:32px 0}a{color:#cbc4ff}summary{cursor:pointer;padding:14px 0}footer{padding:32px 0;font-size:14px}
   </style>
@@ -112,6 +117,7 @@ void main(List<String> args) {
 <body>
 $content
 <script>
+window.cantavueInitialUrl = location.href;
 window.cantavueNavigate = function(destination) {
   const paths = ${jsonEncode(policyLanguages.keys.expand((locale) => policyPages.keys.map((page) => '/${policyPath(page, locale)}')).toList())};
   if (paths.includes(destination) || destination === 'mailto:info@cantavue.com') {
@@ -119,13 +125,15 @@ window.cantavueNavigate = function(destination) {
   }
 };
 window.cantavueSetLocale = function(locale, title, description) {
+  if (!${jsonEncode(siteLanguages.keys.toList())}.includes(locale)) return;
   document.documentElement.lang = locale;
   document.title = title;
   document.querySelector('meta[name="description"]').content = description;
   document.querySelector('meta[property="og:title"]').content = title;
   document.querySelector('meta[property="og:description"]').content = description;
   const url = new URL(location.href);
-  url.pathname = locale === 'en' ? '/en' : locale === 'zh-Hant' ? '/zh-Hant' : '/';
+  url.pathname = locale === 'zh-Hans' ? '/' : '/' + locale;
+  document.documentElement.dir = ['ar', 'he'].includes(locale) ? 'rtl' : 'ltr';
   url.searchParams.delete('lang');
   history.replaceState(null, '', url);
   document.querySelector('link[rel="canonical"]').href = ${jsonEncode(origin)} + url.pathname;

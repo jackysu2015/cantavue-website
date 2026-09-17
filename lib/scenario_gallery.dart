@@ -1,3 +1,4 @@
+import 'site_typography.dart';
 import 'package:flutter/material.dart';
 
 import 'l10n/generated/site_localizations.dart';
@@ -193,7 +194,7 @@ class _Label extends StatelessWidget {
       fontSize: 14,
       fontWeight: FontWeight.w600,
       height: 1.6,
-      letterSpacing: .8,
+      letterSpacing: siteTracking(context, .8),
     ),
   );
 }

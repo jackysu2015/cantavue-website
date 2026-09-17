@@ -1,5 +1,11 @@
 # Website policies and beta metadata — 2026-09-07
 
+## Update — 2026-09-14
+
+The four localized source bundles now cover local teaching records, lesson notifications, explicit compatible HTTPS exchanges, direct cloud transfers and credential removal. Full policy, terms and help text matches the main app's offline Privacy and Support entry. iOS/macOS permissions have English, Simplified Chinese and Traditional Chinese resources. This closes the earlier app-entry drafting gap; it does not mean the new website copy has been deployed.
+
+Ordinary Chrome successfully reads the public policy, which still states September 7. The local website has strict analysis, 6 passing UI tests and a successful release build. Support email delivery remains unverified; September 14 DNS observation found no MX record. See the parent project's `docs/launch/app-store-2026-09-14/` for data flows and conditional IMSLP tracking facts. No collection label has been inferred from the absence of a native analytics SDK. Historical observations below remain dated.
+
 The user requested privacy/terms/support pages, `info@cantavue.com` feedback, then a TestFlight information update. All public copy is in four ARB bundles (separate Simplified/Traditional Chinese and English). Policy/support documents are plain HTML without a Flutter dependency; home-page links preserve locale. The site's existing public audience and verified `www.cantavue.com` binding are preserved. No DNS or access changes are needed.
 
 ## Data flow evidence

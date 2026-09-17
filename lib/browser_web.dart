@@ -10,3 +10,8 @@ void navigate(String destination) => _navigate(destination.toJS);
 
 void updateDocument(String locale, String title, String description) =>
     _setLocale(locale.toJS, title.toJS, description.toJS);
+
+@JS('cantavueInitialUrl')
+external JSString get _locationHref;
+
+Uri currentUri() => Uri.parse(_locationHref.toDart);

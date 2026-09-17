@@ -5,3 +5,6 @@ lib/l10n/generated/
 *.log
 .DS_Store
 dist/
+
+__pycache__/
+.sites-runtime/
