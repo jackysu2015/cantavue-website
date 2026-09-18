@@ -17,7 +17,7 @@ String policyPath(String page, String language) =>
 String escape(String text) => const HtmlEscape().convert(text);
 
 String policyNavigation(String language, Map<String, String> text) =>
-    '<nav class="policy-links">${policyPages.entries.map((page) => '<a href="/${policyPath(page.key, language)}">${escape(text[page.value.$1]!)}</a>').join(' · ')} · <a href="mailto:info@cantavue.com">${escape(text['feedbackEmail']!)}</a></nav>';
+    '<nav class="policy-links">${policyPages.entries.map((page) => '<a href="/${policyPath(page.key, language)}">${escape(text[page.value.$1]!)}</a>').join(' · ')} · <a href="mailto:supingjing@me.com">${escape(text['feedbackEmail']!)}</a></nav>';
 
 // Legal and support pages are complete HTML documents, independent of Flutter
 // bootstrapping, so review teams and assistive technology can read them directly.
@@ -82,7 +82,7 @@ List<String> buildPolicies(String origin) {
 <header class="site-header"><a class="brand" href="${language.value.$3}"><img src="/assets/assets/brand.png" width="42" height="42" alt=""><span>CantaVue</span></a><details><summary>${t('language')}</summary><nav aria-label="${t('language')}">${policyLanguages.entries.map((locale) => '<a href="/${policyPath(kind, locale.key)}" lang="${locale.key}"${locale.key == language.key ? ' aria-current="page"' : ''}>${locale.value.$2}</a>').join(' ')}</nav></details></header>
 <main>
   <a class="back" href="${language.value.$3}">${siteIsRtl(language.key) ? '→' : '←'} ${t('policyHome')}</a>
-  <div class="intro"><p class="eyebrow">CantaVue · ${t('brandCaption')}</p><h1>$title</h1><p class="date">${t('policyUpdated')}</p><p>${t('${kind}Intro')}</p>${kind == 'support' ? '<a class="email-button" href="mailto:info@cantavue.com">${t('supportEmailAction')} ↗</a>' : ''}</div>
+  <div class="intro"><p class="eyebrow">CantaVue · ${t('brandCaption')}</p><h1>$title</h1><p class="date">${t('policyUpdated')}</p><p>${t('${kind}Intro')}</p>${kind == 'support' ? '<a class="email-button" href="mailto:supingjing@me.com">${t('supportEmailAction')} ↗</a>' : ''}</div>
   <div class="document-layout"><aside><nav aria-label="${t('policyContents')}"><strong>${t('policyContents')}</strong><ol>${List.generate(page.value.$2, (i) => '<li><a href="#section-${i + 1}">${t('$kind${i + 1}Title')}</a></li>').join()}</ol></nav></aside><article>$body</article></div>
 </main>
 <footer><p>${t('footerCopyright')}</p>${policyNavigation(language.key, text)}</footer>

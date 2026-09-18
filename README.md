@@ -40,7 +40,7 @@ dart run tool/build.dart
 - `/` 及 32 个语言网址（如 `/en`、`/ar`）有各自的静态 HTML、标题、说明、canonical 与 hreflang；JavaScript 不可用时仍能阅读完整产品与 FAQ 内容。
 - Flutter 语言切换会同步更新页面语言、地址与元数据，刷新后保持语言。导航、语言菜单和 FAQ 使用 Flutter Material 组件的键盘／语义支持。
 - 窄屏和大字号采用折叠导航；尊重减少动画设置。没有注册、候补名单、自动邮件发送或支付；Sites 提供基础访问统计，已在隐私政策中说明。
-- iOS TestFlight 邀请入口已提供，正式版定价尚未确定。反馈邮箱为用户指定的 info@cantavue.com。
+- iOS TestFlight 邀请入口已提供，正式版定价尚未确定。反馈邮箱为用户指定的 supingjing@me.com；首发计划免费、不加入内购，实际商店上线状态另行核验。
 
 ## 素材与依赖
 

@@ -120,7 +120,7 @@ $content
 window.cantavueInitialUrl = location.href;
 window.cantavueNavigate = function(destination) {
   const paths = ${jsonEncode(policyLanguages.keys.expand((locale) => policyPages.keys.map((page) => '/${policyPath(page, locale)}')).toList())};
-  if (paths.includes(destination) || destination === 'mailto:info@cantavue.com') {
+  if (paths.includes(destination) || destination === 'mailto:supingjing@me.com') {
     location.assign(destination);
   }
 };
