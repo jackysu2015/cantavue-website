@@ -30,9 +30,9 @@ dart run tool/flutter.dart test
 dart run tool/build.dart
 ```
 
-`tool/flutter.dart` 是主项目的独立配置包装器副本，输出只写入本官网目录，不改 SDK 或全局配置。`tool/build.dart` 生成 33 语静态搜索文档、站点地图和 Flutter release 后，把公开产物复制到 `dist/`，供 Sites 静态托管。构建会关闭 CDN 渲染资源及 PWA service worker，字体随包提供。原图位于 `assets/hero.png`，不包含真实私人乐谱；说明见 `docs/ASSETS.md`。
+`tool/flutter.dart` 是主项目的独立配置包装器副本，输出只写入本官网目录，不改 SDK 或全局配置。`tool/build.dart` 生成 33 语静态搜索文档、站点地图和 Flutter release 后，把公开产物复制到 `dist/`，供 GitHub Pages 静态托管。构建会关闭 CDN 渲染资源及 PWA service worker，字体随包提供。原图位于 `assets/hero.png`，不包含真实私人乐谱；说明见 `docs/ASSETS.md`。
 
-正式域名确定并授权后，把可信 HTTPS origin 传给 `dart run tool/build.dart https://实际域名`，同步重建 canonical、hreflang 和 sitemap；DNS 与公开访问控制需另行处理，不能把 Sites 私有预览当成公开官网已经上线。
+正式 origin 为 `https://www.cantavue.com`。GitHub 仓库的 `main` 分支仅保存官网源码，`gh-pages` 分支仅保存固定 Flutter 3.41.5 生成的 `dist/` 静态产物。DNS 需将 `www` 指向 GitHub Pages，根域转发到 `https://www.cantavue.com`。
 
 ## 文案、搜索与可访问性
 
