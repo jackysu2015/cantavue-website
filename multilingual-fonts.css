@@ -1,0 +1,14 @@
+@font-face{font-family:CantaMultilingual;src:url('/assets/assets/fonts/NotoSans-Regular.ttf');font-display:swap}
+@font-face{font-family:CantaArabic;src:url('/assets/assets/fonts/NotoSansArabic-Variable.ttf');font-display:swap}
+@font-face{font-family:CantaHebrew;src:url('/assets/assets/fonts/NotoSansHebrew-Variable.ttf');font-display:swap}
+@font-face{font-family:CantaDevanagari;src:url('/assets/assets/fonts/NotoSansDevanagari-Variable.ttf');font-display:swap}
+@font-face{font-family:CantaThai;src:url('/assets/assets/fonts/NotoSansThai-Variable.ttf');font-display:swap}
+@font-face{font-family:CantaCJK;src:url('/assets/assets/fonts/NotoSansCJKsc-Regular.otf');font-display:swap}
+:root{font-family:CantaSansSC,CantaMultilingual,CantaArabic,CantaHebrew,CantaDevanagari,CantaThai,CantaCJK,system-ui,sans-serif}
+nav a[lang]{font-family:CantaSansSC,CantaMultilingual,CantaArabic,CantaHebrew,CantaDevanagari,CantaThai,CantaCJK,system-ui,sans-serif}
+:lang(ar){font-family:CantaArabic,CantaMultilingual,system-ui,sans-serif}
+:lang(he){font-family:CantaHebrew,CantaMultilingual,system-ui,sans-serif}
+:lang(hi){font-family:CantaDevanagari,CantaMultilingual,system-ui,sans-serif}
+:lang(th){font-family:CantaThai,CantaMultilingual,system-ui,sans-serif}
+:lang(ja){font-family:CantaCJK,CantaMultilingual,system-ui,sans-serif}
+:lang(ko){font-family:CantaCJK,CantaMultilingual,system-ui,sans-serif}
