@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'site_typography.dart';
 import 'site_languages.dart';
 export 'site_languages.dart' show initialLanguage;
@@ -183,7 +185,8 @@ class _HomePageState extends State<HomePage> {
         labelWidth(s.navFeatures, 14) +
         labelWidth(s.navWorkflow, 14) +
         labelWidth(s.navFaq, 14) +
-        labelWidth(s.navStatus, 16) +
+        labelWidth(s.navStatus, 14) +
+        labelWidth(s.downloadCta, 16) +
         labelWidth(siteLanguages[widget.language]!, 14);
     final expandedNavigation =
         wide && navigationWidth <= (width.clamp(0, 1328) - 96);
@@ -252,6 +255,10 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () => jump(3),
                           child: Text(s.navFaq),
                         ),
+                        TextButton(
+                          onPressed: () => jump(4),
+                          child: Text(s.navStatus),
+                        ),
                         const SizedBox(width: 20),
                       ],
                       PopupMenuButton<String>(
@@ -286,19 +293,26 @@ class _HomePageState extends State<HomePage> {
                       if (expandedNavigation) ...[
                         const SizedBox(width: 24),
                         FilledButton(
-                          onPressed: () => jump(4),
-                          child: Text(s.navStatus),
+                          onPressed: () => browser.navigate(appStoreUrl),
+                          child: Text(s.downloadCta),
                         ),
                       ] else
                         PopupMenuButton<int>(
                           tooltip: s.menu,
                           icon: const Icon(Icons.menu_rounded),
-                          onSelected: jump,
+                          onSelected: (section) {
+                            if (section == 5) {
+                              browser.navigate(appStoreUrl);
+                            } else {
+                              jump(section);
+                            }
+                          },
                           itemBuilder: (_) => [
                             PopupMenuItem(value: 1, child: Text(s.navFeatures)),
                             PopupMenuItem(value: 2, child: Text(s.navWorkflow)),
                             PopupMenuItem(value: 3, child: Text(s.navFaq)),
                             PopupMenuItem(value: 4, child: Text(s.navStatus)),
+                            PopupMenuItem(value: 5, child: Text(s.downloadCta)),
                           ],
                         ),
                     ],
@@ -355,13 +369,20 @@ class _HomePageState extends State<HomePage> {
                                         WrapCrossAlignment.center,
                                     children: [
                                       FilledButton.icon(
-                                        onPressed: () => jump(1),
-                                        label: Text(s.explore),
+                                        onPressed: () =>
+                                            browser.navigate(appStoreUrl),
                                         icon: const Icon(
-                                          Icons.arrow_forward_rounded,
+                                          Icons.download_rounded,
                                           size: 19,
                                         ),
-                                        iconAlignment: IconAlignment.end,
+                                        label: Text(s.downloadCta),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => jump(1),
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.white,
+                                        ),
+                                        child: Text(s.explore),
                                       ),
                                       TextButton(
                                         onPressed: () => jump(4),
@@ -384,40 +405,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               right: Column(
                                 children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: const Color(0xFF3A3655),
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(19),
-                                      child: AspectRatio(
-                                        aspectRatio: 1.35,
-                                        child: Image.asset(
-                                          'assets/hero.png',
-                                          fit: BoxFit.cover,
-                                          semanticLabel: s.imageCaption,
-                                          errorBuilder:
-                                              (
-                                                _,
-                                                error,
-                                                stackTrace,
-                                              ) => Container(
-                                                color: const Color(0xFF211E43),
-                                                padding: const EdgeInsets.all(
-                                                  70,
-                                                ),
-                                                child: Image.asset(
-                                                  'assets/brand.png',
-                                                  fit: BoxFit.contain,
-                                                  semanticLabel: s.brandCaption,
-                                                ),
-                                              ),
-                                        ),
-                                      ),
-                                    ),
+                                  _ProductScreenshotCarousel(
+                                    wide: wide,
+                                    semanticLabel: s.imageCaption,
                                   ),
                                   const SizedBox(height: 14),
                                   Text(
@@ -831,6 +821,332 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+class _ProductScreenshotCarousel extends StatefulWidget {
+  const _ProductScreenshotCarousel({
+    required this.wide,
+    required this.semanticLabel,
+  });
+
+  final bool wide;
+  final String semanticLabel;
+
+  @override
+  State<_ProductScreenshotCarousel> createState() =>
+      _ProductScreenshotCarouselState();
+}
+
+class _ProductScreenshotCarouselState
+    extends State<_ProductScreenshotCarousel> {
+  final controller = PageController(viewportFraction: .82);
+  Timer? timer;
+  int current = 0;
+  String? screenshotLocale;
+  List<String> shots = const [];
+
+  static const screenshotLocales = {
+    'ar',
+    'ca',
+    'cs',
+    'da',
+    'de',
+    'el',
+    'en',
+    'es',
+    'fi',
+    'fr',
+    'he',
+    'hi',
+    'hr',
+    'hu',
+    'id',
+    'it',
+    'ja',
+    'ko',
+    'ms',
+    'nb',
+    'nl',
+    'pl',
+    'pt',
+    'ro',
+    'ru',
+    'sk',
+    'sv',
+    'th',
+    'tr',
+    'uk',
+    'vi',
+    'zh',
+    'zh_Hans',
+    'zh_Hant',
+  };
+
+  static const shotNames = [
+    'appstore_01-library.png',
+    'appstore_02-scan.png',
+    'appstore_03-annotation.png',
+    'appstore_04-symbols.png',
+    'appstore_05-pages.png',
+    'appstore_06-setlists.png',
+    'appstore_07-metronome.png',
+    'appstore_08-practice.png',
+    'appstore_09-teaching.png',
+    'appstore_10-templates.png',
+  ];
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final locale = _screenshotLocale(Localizations.localeOf(context));
+    if (locale != screenshotLocale) {
+      screenshotLocale = locale;
+      shots = [
+        for (final name in shotNames) 'assets/screenshots/$locale/$name',
+      ];
+      current = 0;
+      if (controller.hasClients) {
+        controller.jumpToPage(0);
+      }
+    }
+    for (final shot in shots) {
+      precacheImage(AssetImage(shot), context);
+    }
+    timer?.cancel();
+    if (!MediaQuery.disableAnimationsOf(context)) {
+      timer = Timer.periodic(const Duration(seconds: 5), (_) => go(1));
+    }
+  }
+
+  static String _screenshotLocale(Locale locale) {
+    if (locale.languageCode == 'zh') {
+      return switch (locale.scriptCode) {
+        'Hant' => 'zh_Hant',
+        'Hans' => 'zh_Hans',
+        _ => 'zh',
+      };
+    }
+    return screenshotLocales.contains(locale.languageCode)
+        ? locale.languageCode
+        : 'en';
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    controller.dispose();
+    super.dispose();
+  }
+
+  void go(int delta) {
+    if (!controller.hasClients) return;
+    final next = (current + delta) % shots.length;
+    controller.animateToPage(
+      next,
+      duration: MediaQuery.disableAnimationsOf(context)
+          ? Duration.zero
+          : const Duration(milliseconds: 420),
+      curve: Curves.easeOutCubic,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) => Semantics(
+    image: true,
+    label: widget.semanticLabel,
+    child: ExcludeSemantics(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFF3A3655)),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Color(0xFF191738), Color(0xFF31205F)],
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x66000000),
+              blurRadius: 28,
+              offset: Offset(0, 18),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(19),
+          child: AspectRatio(
+            aspectRatio: widget.wide ? 1.16 : .9,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final w = constraints.maxWidth;
+                final h = constraints.maxHeight;
+                return Stack(
+                  clipBehavior: Clip.hardEdge,
+                  children: [
+                    Positioned.fill(
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: RadialGradient(
+                            center: const Alignment(.55, -.55),
+                            radius: 1.05,
+                            colors: [
+                              const Color(0xFF7771FF).withValues(alpha: .42),
+                              const Color(0xFF231A4A).withValues(alpha: .18),
+                              const Color(0xFF111127),
+                            ],
+                            stops: const [.0, .5, 1],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned.fill(
+                      child: PageView.builder(
+                        controller: controller,
+                        itemCount: shots.length,
+                        onPageChanged: (value) =>
+                            setState(() => current = value),
+                        itemBuilder: (context, index) => AnimatedBuilder(
+                          animation: controller,
+                          builder: (context, child) {
+                            var distance = 0.0;
+                            if (controller.hasClients &&
+                                controller.position.haveDimensions) {
+                              distance = ((controller.page ?? current) - index)
+                                  .abs()
+                                  .clamp(0.0, 1.0)
+                                  .toDouble();
+                            } else {
+                              distance = current == index ? 0 : 1;
+                            }
+                            final scale = 1 - distance * .08;
+                            final opacity = 1 - distance * .28;
+                            return Center(
+                              child: Opacity(
+                                opacity: opacity,
+                                child: Transform.scale(
+                                  scale: scale,
+                                  child: child,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: w * .025,
+                              vertical: h * .08,
+                            ),
+                            child: _ScreenshotFrame(asset: shots[index]),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: 16,
+                      top: h * .45,
+                      child: _CarouselButton(
+                        icon: Icons.chevron_left_rounded,
+                        onPressed: () => go(-1),
+                      ),
+                    ),
+                    Positioned(
+                      right: 16,
+                      top: h * .45,
+                      child: _CarouselButton(
+                        icon: Icons.chevron_right_rounded,
+                        onPressed: () => go(1),
+                      ),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: h * .065,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          for (var i = 0; i < shots.length; i++)
+                            AnimatedContainer(
+                              duration: MediaQuery.disableAnimationsOf(context)
+                                  ? Duration.zero
+                                  : const Duration(milliseconds: 220),
+                              width: i == current ? 28 : 8,
+                              height: 8,
+                              margin: const EdgeInsets.symmetric(horizontal: 4),
+                              decoration: BoxDecoration(
+                                color: i == current
+                                    ? const Color(0xFFC5BDFF)
+                                    : const Color(0x66C5BDFF),
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+class _CarouselButton extends StatelessWidget {
+  const _CarouselButton({required this.icon, required this.onPressed});
+
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) => IconButton.filledTonal(
+    onPressed: onPressed,
+    icon: Icon(icon),
+    color: Colors.white,
+    style: IconButton.styleFrom(
+      backgroundColor: const Color(0xAA2D216D),
+      fixedSize: const Size(44, 44),
+    ),
+  );
+}
+
+class _ScreenshotFrame extends StatelessWidget {
+  const _ScreenshotFrame({required this.asset});
+
+  final String asset;
+
+  @override
+  Widget build(BuildContext context) => DecoratedBox(
+    decoration: BoxDecoration(
+      color: const Color(0xFFF8F7FF),
+      borderRadius: BorderRadius.circular(18),
+      border: Border.all(color: const Color(0xFFE5E0F4), width: 2),
+      boxShadow: const [
+        BoxShadow(
+          color: Color(0x66000000),
+          blurRadius: 24,
+          offset: Offset(0, 14),
+        ),
+      ],
+    ),
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: Image.asset(
+        asset,
+        fit: BoxFit.contain,
+        alignment: Alignment.topCenter,
+        excludeFromSemantics: true,
+        errorBuilder: (_, _, _) => Center(
+          child: Image.asset(
+            'assets/brand.png',
+            width: 88,
+            height: 88,
+            excludeFromSemantics: true,
+          ),
+        ),
+      ),
+    ),
+  );
 }
 
 class _Section extends StatelessWidget {

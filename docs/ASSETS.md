@@ -1,10 +1,21 @@
-# CantaVue website hero provenance
+# CantaVue website visual asset provenance
+
+## Current App Store promotional hero
+
+- Date: 2026-09-23
+- Runtime assets: `assets/screenshots/{locale}/appstore_01-library.png` through `assets/screenshots/{locale}/appstore_10-templates.png`, where `{locale}` is one of the 34 website locale directories: `ar`, `ca`, `cs`, `da`, `de`, `el`, `en`, `es`, `fi`, `fr`, `he`, `hi`, `hr`, `hu`, `id`, `it`, `ja`, `ko`, `ms`, `nb`, `nl`, `pl`, `pt`, `ro`, `ru`, `sk`, `sv`, `th`, `tr`, `uk`, `vi`, `zh`, `zh_Hans`, `zh_Hant`.
+- Source: iPad 13-inch App Store promotional PNGs from `design/marketing/app-store-features-multilingual-2026-09-18/png/ipad_13/`. Locale mappings use the App Store directories `ar-SA`, `de-DE`, `en-US`, `es-ES`, `fr-FR`, `nl-NL`, `no`, `pt-BR`, `zh-Hans` and `zh-Hant` where Apple codes differ from website route codes. Those finished images were rendered from actual CantaVue Flutter screenshots with CSS crop and framing, then saved to App Store Connect 1.0 draft as part of the verified ten-theme pack.
+- Runtime processing: final App Store promotional PNGs resized to 675 × 900 PNG files for stable website delivery. No private user scores, recordings, accounts, credentials, or diagnostics are included.
+- Purpose: first-viewport product marketing carousel that matches the App Store download story and shows the ten official themes: library, scan/import, annotation, symbols/shapes, page organization, setlists, metronome, practice, teaching and templates/backup.
+- Runtime selection: the Flutter carousel reads the current page locale and loads the matching directory, falling back to English only if an unsupported locale is introduced later.
+
+## Archived concept hero
 
 - Final asset: `hero-source.png`
 - Date: 2026-09-06
 - Dimensions: 1536 × 1024 pixels, PNG, 3:2.
 - Origin: original AI-generated concept photography using the native built-in OpenAI image generation tool, with one targeted correction to remove an extra annotation. No external reference images or user score assets were used.
-- Purpose: atmospheric website marketing hero. This is a concept image, not an actual app screenshot or proof of implemented features. The generated score is illustrative generic notation and has not been validated as playable music.
+- Former purpose: atmospheric website marketing hero. This is a concept image, not an actual app screenshot or proof of implemented features. The generated score is illustrative generic notation and has not been validated as playable music. It is retained as history and is no longer the first-viewport hero visual.
 - Visual QA: black unbranded tablet on piano stand, right-center composition, dark ink scene, lavender rim light, warm side light, ivory score, two purple circle annotations, no people or logos or app controls. One final deliverable, no alternatives.
 
 ## Generation prompt

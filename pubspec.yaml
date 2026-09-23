@@ -23,6 +23,40 @@ flutter:
   assets:
     - assets/brand.png
     - assets/hero.png
+    - assets/screenshots/ar/
+    - assets/screenshots/ca/
+    - assets/screenshots/cs/
+    - assets/screenshots/da/
+    - assets/screenshots/de/
+    - assets/screenshots/el/
+    - assets/screenshots/en/
+    - assets/screenshots/es/
+    - assets/screenshots/fi/
+    - assets/screenshots/fr/
+    - assets/screenshots/he/
+    - assets/screenshots/hi/
+    - assets/screenshots/hr/
+    - assets/screenshots/hu/
+    - assets/screenshots/id/
+    - assets/screenshots/it/
+    - assets/screenshots/ja/
+    - assets/screenshots/ko/
+    - assets/screenshots/ms/
+    - assets/screenshots/nb/
+    - assets/screenshots/nl/
+    - assets/screenshots/pl/
+    - assets/screenshots/pt/
+    - assets/screenshots/ro/
+    - assets/screenshots/ru/
+    - assets/screenshots/sk/
+    - assets/screenshots/sv/
+    - assets/screenshots/th/
+    - assets/screenshots/tr/
+    - assets/screenshots/uk/
+    - assets/screenshots/vi/
+    - assets/screenshots/zh/
+    - assets/screenshots/zh_Hans/
+    - assets/screenshots/zh_Hant/
     - assets/scenes/
     - assets/fonts/OFL-NotoSansSC.txt
     - assets/fonts/OFL-NotoSansTC.txt

@@ -34,7 +34,7 @@ dart run tool/flutter.dart test
 dart run tool/build.dart
 ```
 
-`tool/flutter.dart` 是主项目的独立配置包装器副本，输出只写入本官网目录，不改 SDK 或全局配置。`tool/build.dart` 生成 33 语静态搜索文档、站点地图和 Flutter release 后，把公开产物复制到 `dist/`，供 GitHub Pages 静态托管。构建会关闭 CDN 渲染资源及 PWA service worker，字体随包提供。原图位于 `assets/hero.png`，不包含真实私人乐谱；说明见 `docs/ASSETS.md`。
+`tool/flutter.dart` 是主项目的独立配置包装器副本，输出只写入本官网目录，不改 SDK 或全局配置。`tool/build.dart` 生成 33 语静态搜索文档、站点地图和 Flutter release 后，把公开产物复制到 `dist/`，供 GitHub Pages 静态托管。构建会关闭 CDN 渲染资源及 PWA service worker，字体随包提供。首屏主按钮指向 App Store 下载；宣传图使用已保存到 App Store Connect 草稿的十主题 iPad 宣传图轮播，并按当前官网语言加载对应语言素材，运行时文件位于 `assets/screenshots/`；说明见 `docs/ASSETS.md`。
 
 正式 origin 为 `https://www.cantavue.com`。GitHub 仓库的 `main` 分支仅保存官网源码，`gh-pages` 分支仅保存固定 Flutter 3.41.5 生成的 `dist/` 静态产物。DNS 已将 `www` 指向 GitHub Pages，根域转发到 `https://www.cantavue.com`。
 
@@ -48,7 +48,7 @@ dart run tool/build.dart
 
 ## 素材与依赖
 
-沿用已选 A1 品牌图；钢琴与平板主视觉由 imagegen 独立生成，是明确标注的场景概念图，不是产品截图。没有打包主应用数据库、用户乐谱、录音、账号信息或私人诊断。
+沿用已选 A1 品牌图；首屏主视觉改用 App Store 十主题宣传图轮播，并随官网语言切换对应语言版本，和下载入口保持一致。下方音乐使用情境图仍为明确标注的合成示意，不是客户案例或硬件认证证据。没有打包主应用数据库、用户乐谱、录音、账号信息或私人诊断。
 
 运行时使用 Flutter SDK、flutter_localizations、cupertino_icons 1.0.9 和 SDK 所需 intl 0.20.2；开发检查使用 flutter_test/flutter_lints。与主应用依赖隔离，无新增平台权限。Flutter 和 intl 采用 BSD 系列许可。
 
