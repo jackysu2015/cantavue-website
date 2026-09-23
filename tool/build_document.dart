@@ -21,7 +21,7 @@ void main(List<String> args) {
         language == 'zh-Hans' ? 'index.html' : '$language.html',
       ),
   };
-  const testFlightUrl = 'https://testflight.apple.com/join/3WdM1PdG';
+  const appStoreUrl = 'https://apps.apple.com/app/cantavue/id6809090213';
   for (final entry in pages.entries) {
     final locale = entry.key;
     final text =
@@ -81,7 +81,7 @@ void main(List<String> args) {
       );
     }
     content.write(
-      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p><p><a href="${Uri.encodeFull(testFlightUrl)}" rel="noopener noreferrer">${t('releaseLinkLabel')}</a></p></section><footer>${t('footerCopyright')}${policyNavigation(locale, text)}<p>${t('footerPrivacy')}</p></footer></main>',
+      '</section><section id="release"><h2>${t('releaseTitle')}</h2><p>${t('releaseBody')}</p><p>${t('releaseBadge')}</p><p><a href="${Uri.encodeFull(appStoreUrl)}" rel="noopener noreferrer">${t('releaseLinkLabel')}</a></p></section><footer>${t('footerCopyright')}${policyNavigation(locale, text)}<p>${t('footerPrivacy')}</p></footer></main>',
     );
     final alternates = pages.entries
         .map(
@@ -120,7 +120,7 @@ $content
 window.cantavueInitialUrl = location.href;
 window.cantavueNavigate = function(destination) {
   const paths = ${jsonEncode(policyLanguages.keys.expand((locale) => policyPages.keys.map((page) => '/${policyPath(page, locale)}')).toList())};
-  if (paths.includes(destination) || destination === 'mailto:supingjing@me.com') {
+  if (paths.includes(destination) || destination === 'mailto:supingjing@me.com' || destination === '$appStoreUrl') {
     location.assign(destination);
   }
 };

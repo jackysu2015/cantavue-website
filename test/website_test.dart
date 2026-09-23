@@ -112,11 +112,13 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Can I download CantaVue now?'));
     await tester.pumpAndSettle();
-    final betaAnswer = find.textContaining('join the iOS TestFlight beta');
-    expect(betaAnswer, findsOneWidget);
+    final storeAnswer = find.text(
+      'Yes — CantaVue is now free on the App Store for iPhone and iPad. Use the button below to open the app page:',
+    );
+    expect(storeAnswer, findsOneWidget);
     await tester.tap(find.text('Can I download CantaVue now?'));
     await tester.pumpAndSettle();
-    expect(betaAnswer, findsNothing);
+    expect(storeAnswer, findsNothing);
     expect(tester.takeException(), isNull);
   });
 

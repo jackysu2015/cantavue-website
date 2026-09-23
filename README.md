@@ -1,5 +1,9 @@
 # CantaVue · 谱翎宣传官网
 
+## App Store 发布官网更新 · 2026-09-23
+
+官网发布路径已确认改走 GitHub Pages：`www.cantavue.com` CNAME 到 `jackysu2015.github.io`，本目录独立 Git 仓库的 `origin` 为 `https://github.com/jackysu2015/cantavue-website.git`。首页与静态无脚本文档已从 TestFlight 公测口径更新为 App Store 正式发布口径，下载入口指向 `https://apps.apple.com/app/cantavue/id6809090213`。Apple 公开查询返回 CantaVue 1.0.0、免费、iPhone/iPad，当前版本发布时间为 2026-09-23 05:53:37 UTC。
+
 ## 33 种语言官网 · 2026-09-17
 
 官网已补齐与应用一致的 33 种语言，34 套 ARB 各 134 条（含中文兼容资源）。首页、隐私、条款及支持共 132 个独立文档，提供完整语言菜单、可刷新语言网址、搜索语言标记、阿拉伯文与希伯来文 RTL 布局。同步包含此前 9 月 14 日的政策更新。详细来源与维护方法见 `docs/MULTILINGUAL.md`。
@@ -14,7 +18,7 @@
 
 严格分析无问题；6 项测试通过，包括三语 320 px／200% 字号。旧 FAQ 测试仍断言没有公开下载，现验证已有 TestFlight 邀请文案可展开、收起。最终 Flutter Web 构建成功，编译 14.5 秒；保留 Flutter 官方 PWA 参数弃用提示。下方旧记录按日期保留。
 
-独立 Flutter Web 官网，固定 Flutter 3.41.5 / Dart 3.11.3。首页提供与应用一致的 33 种语言，介绍当前开发版已接入的读谱、批注、谱库与练习方向；准确标注开发验证、下载和定价状态。不会替换主应用或更改 185 条需求的验收状态。
+独立 Flutter Web 官网，固定 Flutter 3.41.5 / Dart 3.11.3。首页提供与应用一致的 33 种语言，介绍当前 App Store 版本已提供的读谱、批注、谱库与练习方向；准确标注下载、免费状态和平台边界。不会替换主应用或更改 185 条需求的验收状态。
 
 ## 开发与构建
 
@@ -32,7 +36,7 @@ dart run tool/build.dart
 
 `tool/flutter.dart` 是主项目的独立配置包装器副本，输出只写入本官网目录，不改 SDK 或全局配置。`tool/build.dart` 生成 33 语静态搜索文档、站点地图和 Flutter release 后，把公开产物复制到 `dist/`，供 GitHub Pages 静态托管。构建会关闭 CDN 渲染资源及 PWA service worker，字体随包提供。原图位于 `assets/hero.png`，不包含真实私人乐谱；说明见 `docs/ASSETS.md`。
 
-正式 origin 为 `https://www.cantavue.com`。GitHub 仓库的 `main` 分支仅保存官网源码，`gh-pages` 分支仅保存固定 Flutter 3.41.5 生成的 `dist/` 静态产物。DNS 需将 `www` 指向 GitHub Pages，根域转发到 `https://www.cantavue.com`。
+正式 origin 为 `https://www.cantavue.com`。GitHub 仓库的 `main` 分支仅保存官网源码，`gh-pages` 分支仅保存固定 Flutter 3.41.5 生成的 `dist/` 静态产物。DNS 已将 `www` 指向 GitHub Pages，根域转发到 `https://www.cantavue.com`。
 
 ## 文案、搜索与可访问性
 
@@ -40,7 +44,7 @@ dart run tool/build.dart
 - `/` 及 32 个语言网址（如 `/en`、`/ar`）有各自的静态 HTML、标题、说明、canonical 与 hreflang；JavaScript 不可用时仍能阅读完整产品与 FAQ 内容。
 - Flutter 语言切换会同步更新页面语言、地址与元数据，刷新后保持语言。导航、语言菜单和 FAQ 使用 Flutter Material 组件的键盘／语义支持。
 - 窄屏和大字号采用折叠导航；尊重减少动画设置。没有注册、候补名单、自动邮件发送或支付；Sites 提供基础访问统计，已在隐私政策中说明。
-- iOS TestFlight 邀请入口已提供，正式版定价尚未确定。反馈邮箱为用户指定的 supingjing@me.com；首发计划免费、不加入内购，实际商店上线状态另行核验。
+- iOS/iPadOS App Store 入口已提供，1.0.0 版本公开查询为免费、无应用内购买。反馈邮箱为用户指定的 supingjing@me.com；后续如有付费方案需另行公告。
 
 ## 素材与依赖
 

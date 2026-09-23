@@ -15,6 +15,7 @@ const iris = Color(0xFF5552DB);
 const ink = Color(0xFF10203A);
 const midnight = Color(0xFF111127);
 const feather = Color(0xFFF7F5FD);
+const appStoreUrl = 'https://apps.apple.com/app/cantavue/id6809090213';
 
 const siteFontFallback = [
   'CantaSansSC',
@@ -740,6 +741,12 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                            ),
+                            const SizedBox(height: 24),
+                            FilledButton.icon(
+                              onPressed: () => browser.navigate(appStoreUrl),
+                              icon: const Icon(Icons.open_in_new_rounded),
+                              label: Text(s.releaseLinkLabel),
                             ),
                           ],
                         ),

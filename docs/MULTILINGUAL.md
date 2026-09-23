@@ -8,7 +8,7 @@ Every language has the same 134 messages. The home page and complete privacy, te
 
 Policy and support messages are reused only where the English source exactly matches the current app resource; translations then come from that same app key. This preserves the September 14 policy scope, including local teaching, notifications, manual transfers and credential deletion. Website-only copy is translated separately. Source generation uses the existing local Qwen model, with direct editorial translations for selected languages and explicit corrections in `tool/translation_corrections.json`.
 
-Text review checks music terminology and preserves the original limits: beta invitation, platform validation, no editable notation recognition from photos, no automatic uploads or cloud sync, and unannounced pricing. This is not independent native-speaker review of every language. No app requirement completion status is changed by a website translation.
+Text review checks music terminology and preserves the current limits: App Store availability, platform validation, no editable notation recognition from photos, no automatic uploads or cloud sync, and no current in-app purchases. This is not independent native-speaker review of every language. No app requirement completion status is changed by a website translation.
 
 ## Fonts and dependencies
 
